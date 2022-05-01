@@ -2,15 +2,15 @@ const router = require('express').Router();
 const Farm = require('../models/Farm');
 
 router.post('/', async (req, res) => {
-    const {name, size} = req.body;
+    const {name} = req.body;
 
-    if(!name && !size) {
-        return res.status(422).json({error: 'Nome e tamanho são obrigatórios.'})
+    if(!name) {
+        return res.status(422).json({error: 'Nome é obrigatório.'})
     }
 
     try {
-        await Farm.create({name,size});
-        return res.status(201).json({message: 'Fazendo criada com sucesso.'})
+        await Farm.create({name});
+        return res.status(201).json({message: 'Fazenda criada com sucesso.'})
     } catch (error) {
         res.status(500).json({error})
     }
@@ -38,26 +38,26 @@ router.get('/:id', async (req, res) => {
 
         return res.status(200).json(farm);
     } catch (error) {
-        res.status(500).json({error})
+        return res.status(500).json({error})
     }
 })
 
 router.patch('/:id', async (req, res) => {
 
     const id = req.params.id;
-    const {name, size} = req.body;
+    const {name} = req.body;
 
     try {
   
-        const updateFarm = await Farm.updateOne({_id: id}, {name, size});
+        const updateFarm = await Farm.updateOne({_id: id}, {name});
 
         if(updateFarm.matchedCount === 0) {
             return res.status(422).json({error: 'Fazendo não encontra.'})
         }
 
-        return res.status(200).json({name, size});
+        return res.status(200).json({name});
     } catch (error) {
-        res.status(500).json({error})
+        return res.status(500).json({error})
     }
 })
 
@@ -70,14 +70,14 @@ router.delete('/:id', async (req, res) => {
         const farm = await Farm.findOne({_id: id});
 
         if(!farm) {
-            return res.status(422).json({error: 'Fazendo não encontra.'})
+            return res.status(422).json({error: 'Fazenda não encontra.'})
         }
   
         await Farm.deleteOne({_id: id});
 
         return res.status(200).json({message: 'Fazenda excluida com sucesso.'});
     } catch (error) {
-        res.status(500).json({error})
+        return res.status(500).json({error})
     }
 })
 

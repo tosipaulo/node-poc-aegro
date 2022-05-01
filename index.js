@@ -17,6 +17,9 @@ app.use(express.json());
 const farmRoute = require('./routes/farm');
 app.use('/api/farm', farmRoute);
 
+const chunkRoute = require('./routes/chunk');
+app.use('/api/chunk', chunkRoute);
+
 
 mongoose.connect(
     `mongodb+srv://${DB_USER}:${DB_PASSWORD}@apicluster.818ir.mongodb.net/dbaegro?retryWrites=true&w=majority`

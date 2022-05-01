@@ -2,7 +2,13 @@ const mongoose = require('mongoose');
 
 const Farm = mongoose.model('Farm', {
     name: String,
-    size: Number
+    chunks: [
+        {
+            name: String,
+            size: Number,
+            productions: Array
+        }
+    ]
 });
 
 module.exports = Farm
