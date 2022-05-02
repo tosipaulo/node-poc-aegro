@@ -10,6 +10,7 @@ router.post('/', async (req, res) => {
 
     try {
         await Farm.create({name});
+        console.log({name})
         return res.status(201).json({message: 'Fazenda criada com sucesso.'})
     } catch (error) {
         res.status(500).json({error})
