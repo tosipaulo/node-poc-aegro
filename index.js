@@ -8,19 +8,19 @@ const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = process.env.DB_PASSWORD;
 const PORT = process.env.PORT || 3200;
 
+const corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200    
+}
+
 app.use(
     express.urlencoded({
-        extended: false
+        extended: true
     })
 );
 
 app.use(express.json());
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", 'GET,PUT,POST,DELETE,PATCH');
-    app.use(cors());
-    next();
-})
+app.use(cors(corsOptions));
 
 const farmRoute = require('./routes/farm');
 app.use('/api/farm', farmRoute);
